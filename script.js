@@ -231,11 +231,11 @@ function renderSearchResults(results) {
         item.className = "search-result-item";
         item.innerHTML = `
             <span class="search-result-icon">📍</span>
-            <div>
-                <div class="search-result-name">${city.name}</div>
-                <div class="search-result-country">
+            <div class="d-flex flex-column">
+                <span class="search-result-name">${city.name}</span>
+                <span class="search-result-country">
                     ${city.country || "—"}${city.admin1 ? ", " + city.admin1 : ""}
-                </div>
+                </span>
             </div>
         `;
         // Saat item diklik, ambil data cuaca untuk kota tersebut
@@ -385,7 +385,7 @@ function renderHourlyForecast(hourly, current, timezone) {
             <span class="hourly-time">${timeLabel}</span>
             <span class="hourly-icon">${info.icon}</span>
             <span class="hourly-temp">${Math.round(hourly.temperature_2m[i])}°</span>
-            <span class="hourly-rain">💧 ${hourly.precipitation_probability?.[i] ?? 0}%</span>
+            <span class="hourly-rain"><i class="bi bi-droplet"></i> ${hourly.precipitation_probability?.[i] ?? 0}%</span>
         `;
         hourlyContainer.appendChild(item);
     }
@@ -414,8 +414,8 @@ function renderDailyForecast(daily, timezone) {
             <span class="daily-icon">${info.icon}</span>
             <span class="daily-desc">${info.desc}</span>
             <span class="daily-temps">
-                <span class="daily-max">${Math.round(daily.temperature_2m_max[i])}°</span>
-                <span class="daily-min">${Math.round(daily.temperature_2m_min[i])}°</span>
+                <span class="daily-max"><i class="bi bi-thermometer-high"></i> ${Math.round(daily.temperature_2m_max[i])}°</span>
+                <span class="daily-min"><i class="bi bi-thermometer-low"></i> ${Math.round(daily.temperature_2m_min[i])}°</span>
             </span>
         `;
         dailyContainer.appendChild(item);

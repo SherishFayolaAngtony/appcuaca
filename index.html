@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weatherly – Weather Forecast Application</title>
 
+    <!-- Bootstrap 5.3 CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+
     <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,32 +19,38 @@
         rel="stylesheet"
     />
 
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="app-container">
+    <div class="container py-4 app-container">
         <!-- ============================= HEADER ============================= -->
-        <header class="app-header">
-            <div class="header-top">
-                <div class="logo">
+        <header class="app-header mb-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap mb-3 header-top">
+                <div class="logo d-flex align-items-center gap-2">
                     <span class="logo-icon">⛅</span>
-                    <h1 class="logo-text">Weatherly</h1>
+                    <h1 class="logo-text mb-0">Weatherly</h1>
                 </div>
-                <p class="tagline">Prakiraan Cuaca Real-time</p>
+                <p class="tagline mb-0 text-muted">Prakiraan Cuaca Real-time</p>
             </div>
 
             <!-- Search Bar -->
-            <div class="search-section">
-                <div class="search-wrapper">
-                    <span class="search-icon">🔍</span>
+            <div class="search-section position-relative">
+                <div class="input-group input-group-lg search-wrapper">
+                    <span class="input-group-text search-icon">🔍</span>
                     <input
                         type="text"
                         id="searchInput"
-                        class="search-input"
+                        class="form-control search-input"
                         placeholder="Cari nama kota..."
                         autocomplete="off"
                     />
-                    <button id="searchBtn" class="search-btn" type="button">
+                    <button id="searchBtn" class="btn search-btn" type="button">
                         Cari
                     </button>
                 </div>
@@ -51,126 +63,150 @@
         <!-- ============================= MAIN ============================= -->
         <main class="main-content">
             <!-- Loading Spinner -->
-            <div id="loadingIndicator" class="loading-indicator hidden">
-                <div class="spinner"></div>
-                <p>Memuat data cuaca...</p>
+            <div id="loadingIndicator" class="loading-indicator hidden text-center py-5">
+                <div class="spinner-border text-primary spinner" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3 text-muted">Memuat data cuaca...</p>
             </div>
 
             <!-- Error Message -->
-            <div id="errorMessage" class="error-message hidden">
+            <div id="errorMessage" class="error-message hidden text-center py-5">
                 <span class="error-icon">⚠️</span>
-                <p id="errorText">Terjadi kesalahan.</p>
+                <p id="errorText" class="mt-2 text-muted">Terjadi kesalahan.</p>
             </div>
 
             <!-- Offline Message -->
-            <div id="offlineMessage" class="error-message offline hidden">
+            <div id="offlineMessage" class="error-message offline hidden text-center py-5">
                 <span class="error-icon">📡</span>
-                <p>Koneksi internet terputus. Periksa jaringan Anda lalu coba lagi.</p>
+                <p class="mt-2 text-muted">Koneksi internet terputus. Periksa jaringan Anda lalu coba lagi.</p>
             </div>
 
             <!-- Empty State (sebelum kota dipilih) -->
-            <div id="emptyState" class="empty-state">
-                <span class="empty-icon">🌍</span>
-                <h2>Selamat datang di Weatherly</h2>
-                <p>Cari kota untuk melihat informasi cuaca terkini dan prakiraan 7 hari ke depan.</p>
+            <div id="emptyState" class="empty-state text-center py-5">
+                <span class="empty-icon d-block">🌍</span>
+                <h2 class="mt-2">Selamat datang di Weatherly</h2>
+                <p class="text-muted">Cari kota untuk melihat informasi cuaca terkini dan prakiraan 7 hari ke depan.</p>
             </div>
 
             <!-- ===== Weather Data Container ===== -->
             <div id="weatherData" class="weather-data hidden">
 
                 <!-- Current Weather Card -->
-                <section class="card current-weather-card">
-                    <div class="current-weather-top">
-                        <div class="location-info">
-                            <h2 id="cityName" class="city-name">—</h2>
-                            <p id="countryName" class="country-name">—</p>
-                            <p id="dateTime" class="date-time">—</p>
-                        </div>
-                        <div class="current-weather-icon">
-                            <span id="weatherIcon" class="weather-emoji">🌤️</span>
-                        </div>
-                    </div>
-
-                    <div class="current-weather-body">
-                        <div class="temp-display">
-                            <span id="currentTemp" class="current-temp">--°</span>
-                            <p id="weatherDescription" class="weather-description">—</p>
+                <section class="card current-weather-card mb-4 shadow">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap current-weather-top mb-4">
+                            <div class="location-info">
+                                <h2 id="cityName" class="city-name mb-0">—</h2>
+                                <p id="countryName" class="country-name mb-0">—</p>
+                                <p id="dateTime" class="date-time mb-0">—</p>
+                            </div>
+                            <div class="current-weather-icon">
+                                <span id="weatherIcon" class="weather-emoji">🌤️</span>
+                            </div>
                         </div>
 
-                        <div class="current-weather-details">
-                            <div class="detail-item">
-                                <span class="detail-icon">🌡️</span>
-                                <div>
-                                    <span class="detail-label">Terasa</span>
-                                    <span id="feelsLike" class="detail-value">--°C</span>
-                                </div>
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 current-weather-body">
+                            <div class="temp-display flex-grow-1">
+                                <span id="currentTemp" class="current-temp">--°</span>
+                                <p id="weatherDescription" class="weather-description">—</p>
                             </div>
-                            <div class="detail-item">
-                                <span class="detail-icon">💧</span>
-                                <div>
-                                    <span class="detail-label">Kelembapan</span>
-                                    <span id="humidity" class="detail-value">--%</span>
+
+                            <div class="row g-2 flex-grow-1 current-weather-details">
+                                <div class="col-6">
+                                    <div class="detail-item d-flex align-items-center gap-2">
+                                        <span class="detail-icon">🌡️</span>
+                                        <div class="d-flex flex-column">
+                                            <span class="detail-label">Terasa</span>
+                                            <span id="feelsLike" class="detail-value">--°C</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-icon">💨</span>
-                                <div>
-                                    <span class="detail-label">Angin</span>
-                                    <span id="windSpeed" class="detail-value">-- km/h</span>
+                                <div class="col-6">
+                                    <div class="detail-item d-flex align-items-center gap-2">
+                                        <span class="detail-icon">💧</span>
+                                        <div class="d-flex flex-column">
+                                            <span class="detail-label">Kelembapan</span>
+                                            <span id="humidity" class="detail-value">--%</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-icon">🌧️</span>
-                                <div>
-                                    <span class="detail-label">Curah Hujan</span>
-                                    <span id="precipitation" class="detail-value">-- mm</span>
+                                <div class="col-6">
+                                    <div class="detail-item d-flex align-items-center gap-2">
+                                        <span class="detail-icon">💨</span>
+                                        <div class="d-flex flex-column">
+                                            <span class="detail-label">Angin</span>
+                                            <span id="windSpeed" class="detail-value">-- km/h</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="detail-item d-flex align-items-center gap-2">
+                                        <span class="detail-icon">🌧️</span>
+                                        <div class="d-flex flex-column">
+                                            <span class="detail-label">Curah Hujan</span>
+                                            <span id="precipitation" class="detail-value">-- mm</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="day-night-indicator">
-                        <span id="dayNightIcon" class="day-night-icon">☀️</span>
-                        <span id="dayNightText" class="day-night-text">Siang</span>
+                        <div class="day-night-indicator d-flex align-items-center gap-2 mt-4 pt-3">
+                            <span id="dayNightIcon" class="day-night-icon">☀️</span>
+                            <span id="dayNightText" class="day-night-text">Siang</span>
+                        </div>
                     </div>
                 </section>
 
                 <!-- Additional Weather Info Card -->
-                <section class="card additional-info-card">
-                    <h3 class="card-title">Informasi Tambahan</h3>
-                    <div class="additional-grid">
-                        <div class="additional-item">
-                            <span class="additional-icon">🔆</span>
-                            <span class="additional-label">UV Index</span>
-                            <span id="uvIndex" class="additional-value">--</span>
-                            <span id="uvLevel" class="additional-sub">—</span>
-                        </div>
-                        <div class="additional-item">
-                            <span class="additional-icon">🌅</span>
-                            <span class="additional-label">Matahari Terbit</span>
-                            <span id="sunrise" class="additional-value">--:--</span>
-                        </div>
-                        <div class="additional-item">
-                            <span class="additional-icon">🌇</span>
-                            <span class="additional-label">Matahari Terbenam</span>
-                            <span id="sunset" class="additional-value">--:--</span>
+                <section class="card shadow mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title h5 mb-3">Informasi Tambahan</h3>
+                        <div class="row g-3 additional-grid">
+                            <div class="col-md-4">
+                                <div class="additional-item d-flex flex-column align-items-center text-center">
+                                    <span class="additional-icon">🔆</span>
+                                    <span class="additional-label">UV Index</span>
+                                    <span id="uvIndex" class="additional-value">--</span>
+                                    <span id="uvLevel" class="additional-sub">—</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="additional-item d-flex flex-column align-items-center text-center">
+                                    <span class="additional-icon">🌅</span>
+                                    <span class="additional-label">Matahari Terbit</span>
+                                    <span id="sunrise" class="additional-value">--:--</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="additional-item d-flex flex-column align-items-center text-center">
+                                    <span class="additional-icon">🌇</span>
+                                    <span class="additional-label">Matahari Terbenam</span>
+                                    <span id="sunset" class="additional-value">--:--</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- Hourly Forecast Card -->
-                <section class="card hourly-card">
-                    <h3 class="card-title">Prakiraan Per Jam</h3>
-                    <div id="hourlyContainer" class="hourly-container">
-                        <!-- Hourly items diisi oleh JavaScript -->
+                <section class="card shadow mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title h5 mb-3">Prakiraan Per Jam</h3>
+                        <div id="hourlyContainer" class="hourly-container">
+                            <!-- Hourly items diisi oleh JavaScript -->
+                        </div>
                     </div>
                 </section>
 
                 <!-- 7-Day Forecast Card -->
-                <section class="card daily-card">
-                    <h3 class="card-title">Prakiraan 7 Hari</h3>
-                    <div id="dailyContainer" class="daily-container">
-                        <!-- Daily items diisi oleh JavaScript -->
+                <section class="card shadow mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title h5 mb-3">Prakiraan 7 Hari</h3>
+                        <div id="dailyContainer" class="daily-container">
+                            <!-- Daily items diisi oleh JavaScript -->
+                        </div>
                     </div>
                 </section>
 
@@ -178,8 +214,8 @@
         </main>
 
         <!-- ============================= FOOTER ============================= -->
-        <footer class="app-footer">
-            <p>
+        <footer class="app-footer text-center py-3">
+            <p class="mb-0 text-muted">
                 Weatherly &copy; 2026 · Data oleh
                 <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
             </p>
@@ -200,6 +236,8 @@
         </svg>
     </a>
 
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

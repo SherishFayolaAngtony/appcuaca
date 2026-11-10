@@ -1,9 +1,13 @@
 /* ============================================================
    Weatherly – Weather Forecast Application
-   style.css
+   style.css  (Bootstrap 5 + custom overrides)
+   ============================================================
+   Bootstrap 5 menangani reset, grid, utilitas, dan komponen
+   dasar. File ini berisi styling kustom: gradient background,
+   tema warna, kartu cuaca, animasi, dan tombol WhatsApp.
    ============================================================ */
 
-/* ===== CSS Reset & Variables ===== */
+/* ===== Custom CSS Variables ===== */
 :root {
     --color-primary: #2563eb;
     --color-primary-dark: #1e40af;
@@ -26,59 +30,26 @@
     --transition: 0.3s ease;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ===== Body & Font ===== */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-text);
+    min-height: 100vh;
+    /* Gradient biru lembut */
+    background: linear-gradient(135deg, var(--color-bg-1) 0%, var(--color-bg-2) 50%, var(--color-bg-3) 100%);
+    background-attachment: fixed;
 }
 
 html {
     scroll-behavior: smooth;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    color: var(--color-text);
-    min-height: 100vh;
-    background: linear-gradient(135deg, var(--color-bg-1) 0%, var(--color-bg-2) 50%, var(--color-bg-3) 100%);
-    background-attachment: fixed;
-}
-
 /* ===== App Container ===== */
 .app-container {
     max-width: 1100px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
 /* ===== Header ===== */
-.app-header {
-    margin-bottom: 2rem;
-}
-
-.header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-}
-
-.logo-icon {
-    font-size: 2.2rem;
-    animation: float 3s ease-in-out infinite;
-}
-
 .logo-text {
     font-size: 1.8rem;
     font-weight: 700;
@@ -88,25 +59,23 @@ body {
     background-clip: text;
 }
 
+.logo-icon {
+    font-size: 2.2rem;
+    animation: float 3s ease-in-out infinite;
+}
+
 .tagline {
     font-size: 0.9rem;
-    color: var(--color-text-light);
-    font-weight: 400;
 }
 
-/* ===== Search Section ===== */
-.search-section {
-    position: relative;
-}
-
+/* ===== Search Bar (Bootstrap input-group + custom) ===== */
 .search-wrapper {
-    display: flex;
-    align-items: center;
     background: var(--color-white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     overflow: hidden;
     transition: box-shadow var(--transition);
+    border: none;
 }
 
 .search-wrapper:focus-within {
@@ -114,47 +83,42 @@ body {
 }
 
 .search-icon {
-    padding: 0 1rem;
-    font-size: 1.2rem;
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
     color: var(--color-text-light);
 }
 
 .search-input {
-    flex: 1;
     border: none;
-    outline: none;
-    padding: 0.9rem 0;
-    font-family: inherit;
-    font-size: 1rem;
-    color: var(--color-text);
-    background: transparent;
+    box-shadow: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.search-input:focus {
+    box-shadow: none;
+    border: none;
 }
 
 .search-input::placeholder {
     color: var(--color-text-light);
 }
 
+/* Tombol Cari dengan gradient biru-ungu */
 .search-btn {
-    border: none;
     background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
     color: var(--color-white);
-    padding: 0 1.8rem;
-    height: 100%;
-    align-self: stretch;
-    font-family: inherit;
-    font-size: 0.95rem;
+    border: none;
     font-weight: 500;
-    cursor: pointer;
+    padding: 0 1.8rem;
     transition: opacity var(--transition);
     white-space: nowrap;
 }
 
 .search-btn:hover {
     opacity: 0.9;
-}
-
-.search-btn:active {
-    transform: scale(0.97);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: var(--color-white);
 }
 
 /* ===== Search Results Dropdown ===== */
@@ -210,56 +174,32 @@ body {
     font-size: 0.9rem;
 }
 
-/* ===== Main Content ===== */
-.main-content {
-    flex: 1;
-}
-
-/* ===== Cards ===== */
-.card {
-    background: var(--color-white);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-md);
-    margin-bottom: 1.5rem;
-    transition: box-shadow var(--transition);
-}
-
-.card:hover {
-    box-shadow: var(--shadow-lg);
-}
-
+/* ===== Card Title ===== */
 .card-title {
-    font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 1.2rem;
     color: var(--color-primary-dark);
 }
 
-/* ===== Current Weather Card ===== */
+/* ===== Current Weather Card (gradient biru-ungu) ===== */
 .current-weather-card {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
     color: var(--color-white);
+    border: none;
     animation: slideUp 0.5s ease;
 }
 
 .current-weather-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
     margin-bottom: 1.5rem;
 }
 
 .location-info .city-name {
     font-size: 1.7rem;
     font-weight: 600;
-    margin-bottom: 0.2rem;
 }
 
 .location-info .country-name {
     font-size: 1rem;
     opacity: 0.85;
-    margin-bottom: 0.3rem;
 }
 
 .location-info .date-time {
@@ -271,19 +211,6 @@ body {
     font-size: 4rem;
     line-height: 1;
     animation: float 3s ease-in-out infinite;
-}
-
-.current-weather-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-}
-
-.temp-display {
-    flex: 1;
-    min-width: 180px;
 }
 
 .current-temp {
@@ -301,17 +228,7 @@ body {
 }
 
 .current-weather-details {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    flex: 1;
     min-width: 250px;
-}
-
-.detail-item {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
 }
 
 .detail-icon {
@@ -326,11 +243,6 @@ body {
     flex-shrink: 0;
 }
 
-.detail-item > div {
-    display: flex;
-    flex-direction: column;
-}
-
 .detail-label {
     font-size: 0.78rem;
     opacity: 0.75;
@@ -342,12 +254,7 @@ body {
 }
 
 .day-night-indicator {
-    margin-top: 1.5rem;
-    padding-top: 1.2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
     font-size: 0.95rem;
     opacity: 0.9;
 }
@@ -357,21 +264,12 @@ body {
 }
 
 /* ===== Additional Info Card ===== */
-.additional-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-}
-
 .additional-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     padding: 1.2rem 0.5rem;
     background: linear-gradient(135deg, var(--color-bg-1), var(--color-bg-3));
     border-radius: var(--radius-md);
     transition: transform var(--transition);
+    height: 100%;
 }
 
 .additional-item:hover {
@@ -401,7 +299,7 @@ body {
     margin-top: 0.15rem;
 }
 
-/* ===== Hourly Forecast Card ===== */
+/* ===== Hourly Forecast ===== */
 .hourly-container {
     display: flex;
     gap: 0.8rem;
@@ -470,7 +368,7 @@ body {
     gap: 0.2rem;
 }
 
-/* ===== Daily Forecast Card ===== */
+/* ===== Daily Forecast ===== */
 .daily-container {
     display: flex;
     flex-direction: column;
@@ -529,47 +427,24 @@ body {
 
 /* ===== Loading Indicator ===== */
 .loading-indicator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 1rem;
-    text-align: center;
     color: var(--color-text-light);
 }
 
 .spinner {
-    width: 56px;
-    height: 56px;
-    border: 4px solid var(--color-bg-1);
-    border-top-color: var(--color-primary);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin-bottom: 1.2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-width: 4px;
 }
 
 /* ===== Error & Offline Messages ===== */
 .error-message {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem 1rem;
-    text-align: center;
     background: var(--color-white);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    color: var(--color-text-light);
 }
 
 .error-message .error-icon {
     font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.error-message p {
-    font-size: 1rem;
-    max-width: 400px;
+    display: block;
 }
 
 .offline .error-icon {
@@ -577,39 +452,14 @@ body {
 }
 
 /* ===== Empty State ===== */
-.empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 1rem;
-    text-align: center;
-    color: var(--color-text-light);
-}
-
 .empty-icon {
     font-size: 4rem;
-    margin-bottom: 1.2rem;
     animation: float 3s ease-in-out infinite;
-}
-
-.empty-state h2 {
-    font-size: 1.5rem;
-    color: var(--color-text);
-    margin-bottom: 0.6rem;
-}
-
-.empty-state p {
-    font-size: 0.95rem;
-    max-width: 420px;
 }
 
 /* ===== Footer ===== */
 .app-footer {
-    text-align: center;
-    padding: 1.5rem 0 0.5rem;
     font-size: 0.82rem;
-    color: var(--color-text-light);
 }
 
 .app-footer a {
@@ -622,7 +472,7 @@ body {
     text-decoration: underline;
 }
 
-/* ===== Utility Classes ===== */
+/* ===== Utility ===== */
 .hidden {
     display: none !important;
 }
@@ -673,14 +523,8 @@ body {
 .weather-data > .card:nth-child(3) { animation-delay: 0.2s; }
 .weather-data > .card:nth-child(4) { animation-delay: 0.3s; }
 
-/* ===== Responsive Design ===== */
-
-/* Tablet */
+/* ===== Responsive Overrides ===== */
 @media (max-width: 768px) {
-    .app-container {
-        padding: 1rem;
-    }
-
     .logo-text {
         font-size: 1.5rem;
     }
@@ -693,22 +537,9 @@ body {
         display: none;
     }
 
-    .header-top {
-        margin-bottom: 1rem;
-    }
-
-    .search-btn {
-        padding: 0 1.2rem;
-        font-size: 0.88rem;
-    }
-
     .current-weather-body {
         flex-direction: column;
         align-items: flex-start;
-    }
-
-    .current-weather-details {
-        width: 100%;
     }
 
     .current-temp {
@@ -717,10 +548,6 @@ body {
 
     .current-weather-icon .weather-emoji {
         font-size: 3rem;
-    }
-
-    .additional-grid {
-        grid-template-columns: 1fr;
     }
 
     .daily-day {
@@ -733,22 +560,13 @@ body {
     }
 }
 
-/* Smartphone */
 @media (max-width: 480px) {
-    .app-container {
-        padding: 0.75rem;
-    }
-
     .logo-text {
         font-size: 1.3rem;
     }
 
     .search-wrapper {
         flex-wrap: wrap;
-    }
-
-    .search-input {
-        font-size: 0.9rem;
     }
 
     .search-btn {
@@ -758,14 +576,6 @@ body {
 
     .current-temp {
         font-size: 3rem;
-    }
-
-    .current-weather-details {
-        grid-template-columns: 1fr;
-    }
-
-    .card {
-        padding: 1.2rem;
     }
 
     .hourly-item {
@@ -804,6 +614,7 @@ body {
 .whatsapp-float:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 24px rgba(37, 211, 102, 0.6);
+    color: #ffffff;
 }
 
 .whatsapp-float:active {
@@ -824,7 +635,6 @@ body {
     }
 }
 
-/* Posisi sedikit naik di layar kecil agar tidak menutupi konten */
 @media (max-width: 480px) {
     .whatsapp-float {
         bottom: 18px;
