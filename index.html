@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weatherly – Weather Forecast Application</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="app-container">
+        <!-- ============================= HEADER ============================= -->
+        <header class="app-header">
+            <div class="header-top">
+                <div class="logo">
+                    <span class="logo-icon">⛅</span>
+                    <h1 class="logo-text">Weatherly</h1>
+                </div>
+                <p class="tagline">Prakiraan Cuaca Real-time</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-section">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="search-input"
+                        placeholder="Cari nama kota..."
+                        autocomplete="off"
+                    />
+                    <button id="searchBtn" class="search-btn" type="button">
+                        Cari
+                    </button>
+                </div>
+
+                <!-- Search Results Dropdown -->
+                <div id="searchResults" class="search-results hidden"></div>
+            </div>
+        </header>
+
+        <!-- ============================= MAIN ============================= -->
+        <main class="main-content">
+            <!-- Loading Spinner -->
+            <div id="loadingIndicator" class="loading-indicator hidden">
+                <div class="spinner"></div>
+                <p>Memuat data cuaca...</p>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="error-message hidden">
+                <span class="error-icon">⚠️</span>
+                <p id="errorText">Terjadi kesalahan.</p>
+            </div>
+
+            <!-- Offline Message -->
+            <div id="offlineMessage" class="error-message offline hidden">
+                <span class="error-icon">📡</span>
+                <p>Koneksi internet terputus. Periksa jaringan Anda lalu coba lagi.</p>
+            </div>
+
+            <!-- Empty State (sebelum kota dipilih) -->
+            <div id="emptyState" class="empty-state">
+                <span class="empty-icon">🌍</span>
+                <h2>Selamat datang di Weatherly</h2>
+                <p>Cari kota untuk melihat informasi cuaca terkini dan prakiraan 7 hari ke depan.</p>
+            </div>
+
+            <!-- ===== Weather Data Container ===== -->
+            <div id="weatherData" class="weather-data hidden">
+
+                <!-- Current Weather Card -->
+                <section class="card current-weather-card">
+                    <div class="current-weather-top">
+                        <div class="location-info">
+                            <h2 id="cityName" class="city-name">—</h2>
+                            <p id="countryName" class="country-name">—</p>
+                            <p id="dateTime" class="date-time">—</p>
+                        </div>
+                        <div class="current-weather-icon">
+                            <span id="weatherIcon" class="weather-emoji">🌤️</span>
+                        </div>
+                    </div>
+
+                    <div class="current-weather-body">
+                        <div class="temp-display">
+                            <span id="currentTemp" class="current-temp">--°</span>
+                            <p id="weatherDescription" class="weather-description">—</p>
+                        </div>
+
+                        <div class="current-weather-details">
+                            <div class="detail-item">
+                                <span class="detail-icon">🌡️</span>
+                                <div>
+                                    <span class="detail-label">Terasa</span>
+                                    <span id="feelsLike" class="detail-value">--°C</span>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">💧</span>
+                                <div>
+                                    <span class="detail-label">Kelembapan</span>
+                                    <span id="humidity" class="detail-value">--%</span>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">💨</span>
+                                <div>
+                                    <span class="detail-label">Angin</span>
+                                    <span id="windSpeed" class="detail-value">-- km/h</span>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">🌧️</span>
+                                <div>
+                                    <span class="detail-label">Curah Hujan</span>
+                                    <span id="precipitation" class="detail-value">-- mm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="day-night-indicator">
+                        <span id="dayNightIcon" class="day-night-icon">☀️</span>
+                        <span id="dayNightText" class="day-night-text">Siang</span>
+                    </div>
+                </section>
+
+                <!-- Additional Weather Info Card -->
+                <section class="card additional-info-card">
+                    <h3 class="card-title">Informasi Tambahan</h3>
+                    <div class="additional-grid">
+                        <div class="additional-item">
+                            <span class="additional-icon">🔆</span>
+                            <span class="additional-label">UV Index</span>
+                            <span id="uvIndex" class="additional-value">--</span>
+                            <span id="uvLevel" class="additional-sub">—</span>
+                        </div>
+                        <div class="additional-item">
+                            <span class="additional-icon">🌅</span>
+                            <span class="additional-label">Matahari Terbit</span>
+                            <span id="sunrise" class="additional-value">--:--</span>
+                        </div>
+                        <div class="additional-item">
+                            <span class="additional-icon">🌇</span>
+                            <span class="additional-label">Matahari Terbenam</span>
+                            <span id="sunset" class="additional-value">--:--</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Hourly Forecast Card -->
+                <section class="card hourly-card">
+                    <h3 class="card-title">Prakiraan Per Jam</h3>
+                    <div id="hourlyContainer" class="hourly-container">
+                        <!-- Hourly items diisi oleh JavaScript -->
+                    </div>
+                </section>
+
+                <!-- 7-Day Forecast Card -->
+                <section class="card daily-card">
+                    <h3 class="card-title">Prakiraan 7 Hari</h3>
+                    <div id="dailyContainer" class="daily-container">
+                        <!-- Daily items diisi oleh JavaScript -->
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- ============================= FOOTER ============================= -->
+        <footer class="app-footer">
+            <p>
+                Weatherly &copy; 2026 · Data oleh
+                <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
